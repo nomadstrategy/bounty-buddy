@@ -24,3 +24,16 @@
 #
 #
 
+#
+#
+#               !TODO: CONSOLE OUTPUT
+#
+#
+# #What is opponents bounty? : $4.9
+# DEBUG:root:$4.9 bounty displayed
+# DEBUG:root:4000.0 chipvalue with these parameters:
+# ProgressiveKO(buyin=10, starting_stack=10000, bounty=4.9, knockout_rate=0.4)
+#
+#
+#
+
