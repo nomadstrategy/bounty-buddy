@@ -7,6 +7,7 @@ import logging
 from dataclasses import dataclass
 
 logging.basicConfig(level=logging.DEBUG)
+# 1:23 yd
 
 
 @dataclass
@@ -22,13 +23,16 @@ class ProgressiveKO:
         return (bounty / self.bounty) * self.starting_bounty_chipvalue
 
     def update_bounty(self):
-        displayed_bounty = int(input("What is opponents bounty? : $"))
-        logging.debug(f"${displayed_bounty} bounty displayed")
+        try:
+            displayed_bounty = float(input("What is opponents bounty? : $"))
+            logging.debug(f"${displayed_bounty} bounty displayed")
+        except:
+            print("You must pass a number > 0")
+            self.update_bounty()
 
 
 test_pko = ProgressiveKO()
+test_pko.update_bounty()
 logging.debug(
     f"{test_pko.bounty_dollars_chipvalue()} chipvalue with these parameters: \n{test_pko}"
 )
-
-test_pko.update_bounty()
