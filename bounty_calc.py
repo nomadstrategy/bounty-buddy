@@ -22,6 +22,8 @@ class ProgressiveKO:
     buyin: float = 10
     starting_knockout_dollars: float = 4.9
     starting_knockout_chips = starting_chips * 0.4
+    updated_bounty = 0
+
     logging.debug(
         f"{starting_knockout_chips} chip value of starting bounty with {starting_chips} starting stack"
     )
@@ -46,6 +48,8 @@ class ProgressiveKO:
         # todo handle float, $ sign, test
 
         logging.debug(f"${self.opponent_bounty_dollars} opponent_bounty_dollars")
+        self.updated_bounty = self.opponent_bounty_dollars
+        logging.debug(f"{self.updated_bounty}")
         return self.opponent_bounty_dollars
 
     def adjust_bounty(self):
@@ -62,13 +66,14 @@ test_pko = ProgressiveKO(10000, 10)
 test_pko.adjust_bounty()
 
 
-def calculate_chip_value(tournament):
-    print("***", tournament)
+def calculate_chip_value(knockoutmtt=test_pko,):
+    print(f"{knockoutmtt}")
 
 
 calculate_chip_value(test_pko)
 
-
+a = ProgressiveKO(10000, 20, 9.8)
+print(a.buyin)
 # test_pko.adjust_bounty()
 
 # @dataclass
