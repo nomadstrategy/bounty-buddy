@@ -4,7 +4,7 @@ generic knockout class with the functions, subclass specific ones
 
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 
 class KnockoutTournament:
@@ -20,30 +20,57 @@ class KnockoutTournament:
         self.starting_ko = float(start_ko)
         self.starting_bounty_chips = self.BOUNTY_VALUE * self.starting_stack
         logging.debug(
-            f"{self.buyin}, {self.starting_stack}, {self.starting_ko}, {self.starting_bounty_chips}"
+            f"BI ${self.buyin}, ss: {self.starting_stack}, start KO ${self.starting_ko},start bounty chipval {self.starting_bounty_chips}"
         )
 
     @classmethod
-    def calculate_bounty(cls, displayed_bounty: float = None):
+    def get_new_bounty(cls, displayed_bounty: float = None):
+
         logging.debug(
             f"{cls.__name__} class, with a ${displayed_bounty} displayed bounty"
         )
-        cls.updated_bounty = displayed_bounty or float(
+        cls.displayed_bounty = displayed_bounty or float(
             input("What is the displayed bounty? $")
         )
-        logging.debug(f"${cls.updated_bounty} updated bounty")
+
+        logging.debug(
+            f"${cls.displayed_bounty} now set as the tournaments displayed bounty"
+        )
+        return cls.displayed_bounty
+
+    def calculate_bounty(self, bounty=None):
+        if not bounty:
+            bounty = self.get_new_bounty()
+        current_chipvalue_for_ko = (
+            bounty / self.starting_ko
+        ) * self.starting_bounty_chips
+        return current_chipvalue_for_ko
 
     def __str__(self):
         return f"""
         a Progressive Knockout tournament with a ${self.buyin} buyin. 
-        {self.starting_stack} starting chips, ${self.starting_ko} initial bounty 
+        {self.starting_stack} starting chips, ${self.starting_ko} initial bounty,
+        ${self.displayed_bounty} currently displayed bounty 
         """
 
 
-test_ko = KnockoutTournament(10, 10000, 4.9)
+"""working basic generator
 
-test_ko.calculate_bounty(4.9)
+Returns:
+    class KnockoutTournament():
+        filled out the basic requirements -- returns a knockout MTT with specified parameters
+"""
 
-# for test_displayed_bounty in range(5, 100, 5):
-#     print(test_ko.calculate_bounty(test_displayed_bounty))
+# def make_mtt():
+#     print("Enter the required information for a tournament")
+#     buyin = float(input("Enter the buyin for the tournament : $"))
+#     starting_stack = int(input("Enter the starting chip count: "))
+#     initial_ko = float(input("Enter the starting KO displayed: $"))
+#     return KnockoutTournament(buyin, starting_stack, initial_ko)
 
+
+# my_tournament = make_mtt()
+# print(my_tournament.starting_stack)
+
+# if __name__ == '__main__':
+#     make_mtt()
