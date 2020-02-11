@@ -14,7 +14,9 @@ class KnockoutTournament:
 
     BOUNTY_VALUE = 0.4  # 40%
 
-    def __init__(self, buyin: float, start_chips: int, start_ko: int):
+    def __init__(
+        self, buyin: float = 10, start_chips: int = 5000, start_ko: float = 4.9
+    ):
         self.buyin = float(buyin)
         self.starting_stack = int(start_chips)
         self.starting_ko = float(start_ko)
@@ -50,8 +52,23 @@ class KnockoutTournament:
         return f"""
         a Progressive Knockout tournament with a ${self.buyin} buyin. 
         {self.starting_stack} starting chips, ${self.starting_ko} initial bounty,
-        ${self.displayed_bounty} currently displayed bounty 
+        
         """
+        ## ${self.displayed_bounty} currently displayed bounty
+
+
+mtt = KnockoutTournament()
+mtt2 = KnockoutTournament(33, 5000, 15.25)
+print(mtt)
+print(mtt.starting_ko)
+print(mtt.starting_bounty_chips)
+mtt.get_new_bounty(4.9)
+print(mtt.displayed_bounty)
+print(mtt.calculate_bounty(4.9))
+# print(mtt2)
+# print(mtt2.starting_ko)
+# print(mtt2.starting_bounty_chips)
+# mtt2.get_new_bounty()
 
 
 """working basic generator
