@@ -45,8 +45,17 @@ class BountyTournament:
         print(f"${bounty} converts to --> {self.current_conversion} chips")
         return self.current_conversion
 
-    def pot_odds(self):
-        pass
+    def pot_odds(self, current_pot=None, price_to_call=None):
+        logging.debug(self)
+        if not current_pot:
+            current_pot = int(input("Enter current potsize:  "))
+
+        if not price_to_call:
+            price_to_call = int(input("Enter cost to call:  "))
+
+        final_pot = self.convert_bounty() + current_pot + price_to_call
+        pot_odds = price_to_call / final_pot * 100
+        return f"pot odds: {round(pot_odds)}%"
 
     def __str__(self):
         return f"""
@@ -80,19 +89,6 @@ class FlatKnockout(BountyTournament):
     starting_stack: int = 10000
 
 
-def pot_odds(mtt_instance, current_pot=None, price_to_call=None):
-    logging.debug(mtt_instance)
-    if not current_pot:
-        current_pot = int(input("Enter current potsize:  "))
-
-    if not price_to_call:
-        price_to_call = int(input("Enter cost to call:  "))
-
-    final_pot = current_pot + price_to_call  + mtt_instance.convert_bounty()
-    pot_odds = price_to_call / final_pot * 100
-    return f"pot odds: {round(pot_odds)}%"
-
-
 a = SuperKnockout()
 
-print(pot_odds(a))
+a.pot_odds()
